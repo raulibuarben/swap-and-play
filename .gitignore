@@ -1,0 +1,28 @@
+# Entornos y secretos
+.env
+*.env
+backend/venv/
+backend/.venv/
+backend/env/
+
+# Python / Django
+__pycache__/
+*.py[cod]
+*$py.class
+*.sqlite3
+*.log
+db.sqlite3
+media/
+staticfiles/
+
+# Node / React / Vite
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/*.local
+
+# Editores y sistemas operativos (Linux / Windows)
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
