@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Swap & Play — Game Marketplace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="brand" data-view="market"><span class="brand-mark">S</span><span>Swap<span class="brand-amp">&</span>Play</span></button>
+    <nav class="main-nav" aria-label="Main navigation">
+      <button class="nav-link active" data-view="market">Marketplace</button>
+      <button class="nav-link" data-view="listings">My listings</button>
+      <button class="nav-link" data-view="activity">Activity</button>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-button" id="notificationsButton" aria-label="Notifications">♢</button>
+      <button class="profile-button" id="profileButton"><span class="avatar" id="headerAvatar">?</span><span id="headerName">Sign in</span></button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
+      <div>
+        <p class="eyebrow">THE PLAYER-TO-PLAYER MARKETPLACE</p>
+        <h1>Find your next<br><span>favorite game.</span></h1>
+      </div>
+      <button class="primary-button" id="newListingButton"><span>＋</span> List an item</button>
+    </section>
+
+    <section class="market-controls" id="marketControls">
+      <label class="search-box">
+        <span>⌕</span>
+        <input id="searchInput" type="search" placeholder="Search games, consoles, accessories..." aria-label="Search marketplace">
+      </label>
+      <select id="consoleFilter" aria-label="Filter by console">
+        <option>All consoles</option>
+        <option>Nintendo Switch</option>
+        <option>PlayStation 5</option>
+        <option>Xbox Series X</option>
+        <option>PC</option>
+      </select>
+      <button class="filter-button" id="filterButton">☷ Filters</button>
+    </section>
+
+    <section class="content-section" id="marketView">
+      <div class="section-heading"><h2>Fresh listings</h2><span id="listingCount"></span></div>
+      <div class="listing-grid" id="listingGrid"></div>
+    </section>
+
+    <section class="content-section hidden" id="listingsView">
+      <div class="section-heading"><h2>My listings</h2><button class="primary-button" id="newListingButtonSecondary">＋ List an item</button></div>
+      <div class="listing-grid" id="myListingsGrid"></div>
+    </section>
+
+    <section class="content-section hidden" id="activityView">
+      <div class="section-heading"><h2>Activity</h2></div>
+      <div class="activity-layout">
+        <div class="panel">
+          <h3>Offers</h3>
+          <div id="offersList"></div>
+        </div>
+        <div class="panel">
+          <h3>Transaction history</h3>
+          <div id="transactionsList"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="authDialog">
+    <button class="dialog-close" data-close="authDialog" aria-label="Close">×</button>
+    <div class="auth-layout">
+      <div class="auth-art"><span class="brand-mark large">S</span><p>Buy. Sell. Swap.<br><strong>Keep playing.</strong></p></div>
+      <div class="auth-form">
+        <div class="auth-tabs"><button class="active" data-auth="login">Sign in</button><button data-auth="register">Create account</button></div>
+        <h2 id="authTitle">Welcome back</h2>
+        <form id="authForm">
+          <label class="name-field hidden">Name<input name="name" autocomplete="name"></label>
+          <label>Email address<input name="email" type="email" autocomplete="email" required value="demo@swapplay.com"></label>
+          <label>Password<input name="password" type="password" autocomplete="current-password" required value="demo1234"></label>
+          <button class="primary-button full" type="submit">Sign in</button>
+        </form>
+        <p class="auth-error" id="authError"></p>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="listingDialog">
+    <button class="dialog-close" data-close="listingDialog" aria-label="Close">×</button>
+    <div class="form-dialog">
+      <p class="eyebrow">NEW LISTING</p><h2>What are you selling?</h2>
+      <form id="listingForm">
+        <label>Title<input name="title" required placeholder="Game or item name"></label>
+        <div class="form-row"><label>Console<select name="console"><option>Nintendo Switch</option><option>PlayStation 5</option><option>Xbox Series X</option><option>PC</option></select></label><label>Condition<select name="condition"><option>Like new</option><option>Excellent</option><option>Good</option><option>Fair</option></select></label></div>
+        <label>Asking price ($)<input name="price" type="number" min="1" required></label>
+        <label>Description<textarea name="description" rows="3" placeholder="Tell buyers about the item"></textarea></label>
+        <button class="primary-button full" type="submit">Publish listing</button>
+      </form>
+    </div>
+  </dialog>
+
+  <dialog id="offerDialog">
+    <button class="dialog-close" data-close="offerDialog" aria-label="Close">×</button>
+    <div class="form-dialog">
+      <p class="eyebrow">MAKE AN OFFER</p><h2 id="offerTitle"></h2>
+      <div class="offer-tabs"><button class="active" data-offer-type="money">Offer money</button><button data-offer-type="swap">Propose swap</button></div>
+      <form id="offerForm">
+        <input type="hidden" name="listingId">
+        <input type="hidden" name="type" value="money">
+        <label class="amount-field">Your offer ($)<input name="amount" type="number" min="1"></label>
+        <label class="swap-field hidden">Item you would swap<input name="swapItem" placeholder="Name of your game or item"></label>
+        <label>Message<textarea name="message" rows="3" placeholder="Say hello or add details"></textarea></label>
+        <button class="primary-button full" type="submit">Send offer</button>
+      </form>
+    </div>
+  </dialog>
+
+  <dialog id="profileDialog">
+    <button class="dialog-close" data-close="profileDialog" aria-label="Close">×</button>
+    <div class="form-dialog">
+      <p class="eyebrow">YOUR PROFILE</p><h2 id="profileName"></h2>
+      <form id="profileForm">
+        <label>Name<input name="name"></label>
+        <label>Location<input name="location"></label>
+        <button class="primary-button full" type="submit">Save profile</button>
+      </form>
+      <button class="text-button" id="logoutButton">Sign out</button>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script src="/app.js"></script>
+</body>
+</html>
